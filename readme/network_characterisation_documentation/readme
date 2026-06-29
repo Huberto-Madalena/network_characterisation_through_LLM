@@ -1,0 +1,16 @@
+Simply put, this project consists of a software solution that takes a PCAP file, reads it, performs a series of aggregation functions in order to produce a CSV file with the most relevant information organised according to common network features responsible for containing the most important information from a network administrator's point of view. Extensive field research was conducted in order to get to know what those common netadmin questions were, and the presented solution was crafted with those very questions in mind. 
+
+The main premise of this solution is the possibility of providing answers in a timely fashion, with minimal user intervention. The system takes the information contained within a PCAP file, extracts the useful data according to a set of parameters determined throughout the life cycle of the processing pipeline, and outputs a brief report ofthe main points of the network, highlighting possible areas of improvement and troubleshooting.
+
+Once you have your google gemini API key saved in the txt file in the config folder and a valid PCAP file in the config/input_pcap directory, all you have to do is run the application. From a terminal window, simply type in:
+
+python3 main.py
+
+The processing work begins with the reading of the PCAP file through extensive use of the Pyshark library, extracting the fields specified in the file "rules.yaml" in the config folder, which provides a generalisation paradigm to the project. The aggregation operation relies on the contents of the file stream_processor.yaml in order to gather the data that will be used to define the network from this trace file. 
+
+Through a series of operations using leveraging the python libraries, specialised data structures such as dictionaries and lists are combined to aid in the packet feature aggregation, assembling the relevant information in cells stored in a CSV file, expressing the whole content of the pcap file. Ultimately, the content of this CSV file is reduced according to the total size of the frame as well as the actual payload size for TCP and UDP data, taking into consideration these parameters to determine the usefulness of the flows collected into the cells of the CSV file. A ranking system determines the order of importance of the flows stored in the CSV file, summarising the contents of the PCAP file to reflect the state of the network according to these parameters. Henceforth, these flows are used to evaluate the network through the use of an LLM model, which is prompted to read the top 100 flows from the CSV document. The LLM model interprets this information, displaying a succint report with the relevant information. 
+
+The default LLM model is gemini-2.0-flash, being the fallback model for the pcap interpreting work. In case there are no more available tokens to run this particular model, the system iterates through a list of other free models, until it finds one available to fulfill the API request and finish the interpretation of the packet data.  
+
+
+It bears noticing that this is an experimental work, with many improvements still underway. This prototype is intended to provide inspiration to similar architectures which can further address this theme, and serve as a starting point to more advanced and suitable solutions. 
