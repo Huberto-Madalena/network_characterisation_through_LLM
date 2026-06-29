@@ -1,0 +1,21 @@
+This project allows for the network characterisation through means of trace analysis. Meaning, a pcap file is read, undergoing a series of processing operations which at the end results in a short report listing the main observable aspects of the network. Since it runs entirely on python, its advisable to have at least Python 3.14, although having its latest version installed would be best. 
+
+This is the list of libraries that you should install in order to have the whole system operational: 
+
+pandas
+numpy
+genai
+pyshark
+PyYAML
+
+You can check whether you have the above libraries installed with the command: pip show <library> e.g.: pip show PyYAML. To install a library i nUbuntu, open a terminal session and 
+enter sudo apt install python3-<library> e.g.: sudo apt install python3-pandas.
+
+You need to clone this repository precisely as it is, without changing anything. There are two main folders: config and modules. The Config folder holds the configuration files, one with the Rules_engine framework for network protocol feature generalisation (the rules.yaml file), while the stream_processor.py sets the protocol features that will make up the fields of the analysis. The list of LLM models used to read the post-processed pcap file is also in this path. This folder also contains the file api_text.txt. Here you type in your own google Gemini API key, which can be obtained for free with an active google account. 
+
+https://ai.google.dev/gemini-api/docs/api-key?hl=de
+
+By copying your own API key in the specified path onto this file, the system will read the API key string and use it to employ an LLM model to read the aggregated information accrued from the PCAP file and provide you with the network report. 
+
+You also need to specify a PCAP file to be analysed. This should be placed in the following directory: network_characterisation_build3/data/input_pcaps# 
+Make sure to name your PCAP file "sample.pcap" in order for it to be processed by the Parser. 
